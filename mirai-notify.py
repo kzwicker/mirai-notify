@@ -46,7 +46,7 @@ def main(args):
             oldStationStatus = stationStatus
             
             print(f"Station {stationID} is now {nameStatus.get(stationStatus, 'unknown')}")
-            sendEmail(host, user, pwd, mailList, f"Hydrogen station is now {nameStatus.get(stationStatus, 'unknown')}", f"Status of {'35' if H35 else '70'}MPa pump with station ID {stationID} is now {nameStatus.get(stationStatus, 'unknown')} with {stationCapacity}kg stored.")
+            sendEmail(host, user, pwd, mailList, f"Hydrogen station is now {nameStatus.get(stationStatus, 'unknown')}", f"Status of H{'35' if H35 else '70'} pump with station ID {stationID} is now {nameStatus.get(stationStatus, 'unknown')} with {stationCapacity}kg stored.")
         
         time.sleep(300)
 
