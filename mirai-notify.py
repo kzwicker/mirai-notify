@@ -18,7 +18,7 @@ def main(args):
         print("Usage: python3 mirai-notify.py <stationID> <35|70> <smtp_host> <smtp_user> <smtp_password> <email1> [email2] ...")
         return
 
-    oldStationStatus = "6"
+    oldStationStatus = "2"
     stationID = args[1]
     H35 = args[2] == "35"
     host = args[3]
