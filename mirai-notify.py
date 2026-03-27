@@ -39,12 +39,14 @@ def main(args):
             if station["s"] == stationID:
                 print(station)
                 stationStatus = "261" if station["ds"] == "261" else (station["s3"] if kpsi35 else station["s7"])
+                stationCapacity = station["c3"] if kpsi35 else station["c7"]
+                break
         
         if stationStatus != oldStationStatus:
             oldStationStatus = stationStatus
             
             print(f"Station {stationID} is now {nameStatus.get(stationStatus, 'unknown')}")
-            sendEmail(host, user, pwd, mailList, f"Hydrogen station is now {nameStatus.get(stationStatus, 'unknown')}", f"{'35' if kpsi35 else '70'} kpsi station with ID {stationID} is now {nameStatus.get(stationStatus, 'unknown')}")
+            sendEmail(host, user, pwd, mailList, f"Hydrogen station is now {nameStatus.get(stationStatus, 'unknown')}", f"Status of {'35' if kpsi35 else '70'}kpsi pump with station ID {stationID} is now {nameStatus.get(stationStatus, 'unknown')} with {stationCapacity}kg stored.")
         
         time.sleep(300)
 
@@ -55,6 +57,7 @@ def sendEmail(host, user, pwd, mailList, subject, body):
             smtp.login(user, pwd)
 
             for mail in mailList:
+                print(f"    Sending email to {mail}")
                 msg = f"Subject: {subject}\n\n{body}"
                 smtp.sendmail(user, mail, msg)
     except:
