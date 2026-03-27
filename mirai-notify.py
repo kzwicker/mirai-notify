@@ -20,7 +20,7 @@ def main(args):
 
     oldStationStatus = "6"
     stationID = args[1]
-    kpsi35 = args[2] == "35"
+    H35 = args[2] == "35"
     host = args[3]
     user = args[4]
     pwd = args[5]
@@ -38,15 +38,15 @@ def main(args):
         for station in json:
             if station["s"] == stationID:
                 print(station)
-                stationStatus = "261" if station["ds"] == "261" else (station["s3"] if kpsi35 else station["s7"])
-                stationCapacity = station["c3"] if kpsi35 else station["c7"]
+                stationStatus = "261" if station["ds"] == "261" else (station["s3"] if H35 else station["s7"])
+                stationCapacity = station["c3"] if H35 else station["c7"]
                 break
         
         if stationStatus != oldStationStatus:
             oldStationStatus = stationStatus
             
             print(f"Station {stationID} is now {nameStatus.get(stationStatus, 'unknown')}")
-            sendEmail(host, user, pwd, mailList, f"Hydrogen station is now {nameStatus.get(stationStatus, 'unknown')}", f"Status of {'35' if kpsi35 else '70'}kpsi pump with station ID {stationID} is now {nameStatus.get(stationStatus, 'unknown')} with {stationCapacity}kg stored.")
+            sendEmail(host, user, pwd, mailList, f"Hydrogen station is now {nameStatus.get(stationStatus, 'unknown')}", f"Status of {'35' if H35 else '70'}MPa pump with station ID {stationID} is now {nameStatus.get(stationStatus, 'unknown')} with {stationCapacity}kg stored.")
         
         time.sleep(300)
 
